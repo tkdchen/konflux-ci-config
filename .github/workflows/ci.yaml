@@ -1,0 +1,20 @@
+name: CI
+"on":
+  pull_request:
+    branches: [main]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: |
+          set -x
+          git branch main origin/main
+          git branch -a
+          git log main
+          echo "current branch: $(git branch --show-current)"
+          git checkout -b pr-verify
+          echo -n "current branch: $(git branch --show-current)"
